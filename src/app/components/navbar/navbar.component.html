@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['/']">Resume</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/']">首頁 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/government']">政府專區</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/host']">求職者專區</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/school']">教育單位</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/company']">企業單位</a>
+      </li>
+    </ul>
+  </div>
+</nav>
