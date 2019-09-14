@@ -9,3 +9,10 @@ export interface ResumeInitialOptions {
     age: number;
     gender: number;
 }
+
+export interface EventLogOptions {
+    filter?: Object;
+    fromBlock?: number;
+    toBlock?: number;
+    topics?: Array<any>;
+}

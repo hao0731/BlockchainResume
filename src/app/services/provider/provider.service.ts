@@ -83,4 +83,8 @@ export class ProviderService {
         );
     }
 
+    public getResume(address: string): any {
+        return new this.web3.eth.Contract(ResumeContract.abi, address);
+    }
+
 }

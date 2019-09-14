@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbButtonsModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [],
     imports: [
-        NgbButtonsModule
+        NgbButtonsModule,
+        NgbTabsetModule
     ],
     exports: [
-        NgbButtonsModule
+        NgbButtonsModule,
+        NgbTabsetModule
     ]
 })
 export class BootstrapModule { }

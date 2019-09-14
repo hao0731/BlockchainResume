@@ -1,5 +1,7 @@
+import { Observable, throwError, of } from 'rxjs';
 import * as web3 from 'web3-utils';
-import { EtherUnit } from '../types';
+import * as ABI from 'web3-eth-abi';
+import { EtherUnit, ResumeContract } from '../types';
 
 export const BN = web3.BN;
 
@@ -62,5 +64,15 @@ export class Web3Utils {
 
     public static toWei(value: any, uint: string): any {
         return EtherUnit[uint] ? web3.toWei(value, EtherUnit[uint]) : web3.toWei(value, 'ether');
+    }
+
+    public static decodeLog(eventName: string, receipt: any): Observable<any> {
+      const abi = ResumeContract.abi.find(item => item.name === eventName && item.type === 'event');
+      if (!abi) {
+          return throwError(`Not found event: ${ eventName }`);
+      }
+      const inputs = abi.inputs;
+      const logs = receipt.logs;
+      return of(ABI.decodeLog(inputs, logs[0].data, logs[0].topics));
     }
 }

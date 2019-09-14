@@ -1,0 +1,69 @@
+<div class="my-3" *ngIf="!isConfirmed && !isError">
+    <form
+        #form="ngForm"
+        [formGroup]="deployForm"
+        (ngSubmit)="deployResume(deployForm.value)"
+    >
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="輸入姓名"
+                [formControlName]="'name'"
+                [disabled]="isPending"
+            >
+        </div>
+        <div class="form-group">
+            <label for="address">帳戶位址</label>
+            <input
+                type="text"
+                class="form-control"
+                id="address"
+                placeholder="輸入帳戶位址"
+                [formControlName]="'address'"
+                [disabled]="isPending"
+            >
+        </div>
+        <div class="form-group">
+            <label for="gender">性別</label>
+            <select class="form-control" id="gender" [formControlName]="'gender'" [disabled]="isPending">
+                <option [ngValue]="0">男</option>
+                <option [ngValue]="1">女</option>
+                <option [ngValue]="2">其他</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age">年齡</label>
+            <select multiple class="form-control" id="age" [formControlName]="'age'" [disabled]="isPending">
+                <option *ngFor="let age of ageRange" [ngValue]="age">{{ age }}</option>
+            </select>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isPending">新增</button>
+        </div>
+    </form>
+</div>
+<div class="my-3" *ngIf="isConfirmed">
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ resumeInfo.name }}</li>
+            <li class="list-group-item">{{ resumeInfo.age }}</li>
+            <li class="list-group-item">{{ hostGender }}</li>
+            <li class="list-group-item"><b>{{ resumeInfo.address }}</b></li>
+        </ul>
+        <div class="card-body text-right">
+            <button class="btn btn-primary" (click)="resetConfirmState()">關閉</button>
+        </div>
+    </div>
+</div>
+<div class="my-3" *ngIf="isError">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>發生錯誤</strong> {{ errorMessage }}
+        <button type="button" class="close" (click)="resetErrorState()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
