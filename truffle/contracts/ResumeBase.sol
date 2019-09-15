@@ -68,10 +68,10 @@ contract ResumeBase {
         uint endDate;
     }
 
-struct Skill {
-    string class;
-    string name;
-}
+    struct Skill {
+        string class;
+        string name;
+    }
 
     struct Education {
         Organization school;

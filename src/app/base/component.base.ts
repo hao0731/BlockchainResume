@@ -9,7 +9,7 @@ export class ComponentBase {
     public isError = false;
     public errorMessage = '';
 
-    public providerSvc: ProviderService;
+    protected providerSvc: ProviderService;
 
     constructor(
         injector: Injector
