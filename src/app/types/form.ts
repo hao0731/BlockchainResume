@@ -3,3 +3,8 @@ export enum Gender {
     female,
     other
 }
+
+export enum OrganizationType {
+    school = 1,
+    company
+}

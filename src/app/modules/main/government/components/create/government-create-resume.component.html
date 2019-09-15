@@ -1,6 +1,5 @@
 <div class="my-3" *ngIf="!isConfirmed && !isError">
     <form
-        #form="ngForm"
         [formGroup]="deployForm"
         (ngSubmit)="deployResume(deployForm.value)"
     >
@@ -12,7 +11,6 @@
                 id="name"
                 placeholder="輸入姓名"
                 [formControlName]="'name'"
-                [disabled]="isPending"
             >
         </div>
         <div class="form-group">
@@ -23,12 +21,11 @@
                 id="address"
                 placeholder="輸入帳戶位址"
                 [formControlName]="'address'"
-                [disabled]="isPending"
             >
         </div>
         <div class="form-group">
             <label for="gender">性別</label>
-            <select class="form-control" id="gender" [formControlName]="'gender'" [disabled]="isPending">
+            <select class="form-control" id="gender" [formControlName]="'gender'">
                 <option [ngValue]="0">男</option>
                 <option [ngValue]="1">女</option>
                 <option [ngValue]="2">其他</option>
@@ -36,12 +33,12 @@
         </div>
         <div class="form-group">
             <label for="age">年齡</label>
-            <select multiple class="form-control" id="age" [formControlName]="'age'" [disabled]="isPending">
+            <select multiple class="form-control" id="age" [formControlName]="'age'">
                 <option *ngFor="let age of ageRange" [ngValue]="age">{{ age }}</option>
             </select>
         </div>
         <div class="text-right">
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isPending">新增</button>
+            <button type="submit" class="btn btn-primary" [disabled]="deployForm.invalid || isPending">新增</button>
         </div>
     </form>
 </div>

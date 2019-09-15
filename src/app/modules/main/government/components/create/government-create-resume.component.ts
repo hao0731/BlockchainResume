@@ -1,6 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Web3Utils } from 'src/app/utils';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Gender, ResumeInitialOptions } from 'src/app/types';
 import { ComponentBase } from 'src/app/base/component.base';
 
@@ -53,24 +52,22 @@ export class GovernmentCreateResumeComponent extends ComponentBase {
         if (Array.isArray(data.age)) {
             data.age = data.age[0];
         }
+        this.isPending = true;
+        this.setFormDisabled(this.deployForm);
         this.providerSvc.deployResume(data).subscribe(
             instance => {
                 this.transactionConfirmed();
+                this.setFormDisabled(this.deployForm, false);
                 this.deployForm.reset();
                 this.resumeInfo = data;
                 this.resumeInfo.address = instance.address;
             },
             err => {
-                this.transactionError();
+                this.transactionError(err.message);
+                this.setFormDisabled(this.deployForm, false);
                 this.deployForm.reset();
-                this.errorMessage = err.message;
             }
         );
-    }
-
-    private addressValidator(control: FormControl): any {
-        const address = control.value;
-        return Web3Utils.isAddress(address) ? null : { message: `invalid address: ${ address }` };
     }
 
 }
