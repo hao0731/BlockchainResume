@@ -1,1 +1,71 @@
-<p>host works!</p>
+<div class="container my-3">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">求職者專區</h1>
+            <p class="lead">提供求職者撰寫自傳、聯絡方式及專業技能的頁面</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="my-3" *ngIf="!isConfirmed && !isError">
+        <form
+            [formGroup]="profileForm"
+            (ngSubmit)="updateProfile(profileForm.value)"
+        >
+            <div class="form-group">
+                <label for="contract">履歷位址</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="contract"
+                    placeholder="輸入履歷位址"
+                    [formControlName]="'contract'"
+                >
+            </div>
+            <div class="form-group">
+                <label for="contact">聯絡方式</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="contact"
+                    placeholder="輸入聯絡方式"
+                    [formControlName]="'contact'"
+                >
+            </div>
+            <div class="form-group">
+                <label for="autobiography">自傳</label>
+                <textarea
+                    class="form-control"
+                    id="autobiography"
+                    rows="5"
+                    [formControlName]="'autobiography'"
+                ></textarea>
+            </div>
+            <label>專業技能</label>
+            <div [formArrayName]="'skills'">
+                <div class="form-group" *ngFor="let address of profileForm.controls['skills'].controls; let i=index" [formGroupName]="i" >
+                    <input type="text" class="form-control" placeholder="輸入類別" [formControlName]="'class'">
+                    <input type="text" class="form-control" placeholder="輸入技能名稱" [formControlName]="'name'">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-danger btn-circle" (click)="removeSkillField(i)">-</button>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <button type="button" class="btn btn-info btn-circle" (click)="addSkillField()">+</button>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || isPending">新增</button>
+            </div>
+        </form>
+    </div>
+<div class="my-3" *ngIf="isConfirmed">
+</div>
+<div class="my-3" *ngIf="isError">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>發生錯誤</strong> {{ errorMessage }}
+        <button type="button" class="close" (click)="resetErrorState()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</div>
