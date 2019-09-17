@@ -1,6 +1,8 @@
 import { Component, Injector } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ComponentBase } from 'src/app/base/component.base';
+import { from, forkJoin } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-host',
@@ -24,7 +26,29 @@ export class HostComponent extends ComponentBase {
     }
 
     public updateProfile(data: any): void {
-        console.log(data);
+        this.isPending = true;
+        this.setFormDisabled(this.profileForm);
+        const resume = this.providerSvc.getResume(data.contract);
+        const request = [];
+        request.push(
+            from(resume.methods.setContact(data.contact).send({ from: this.providerSvc.defaultAccount })),
+            from(resume.methods.setAutobiography(data.autobiography).send({ from: this.providerSvc.defaultAccount }))
+        );
+        for (const skill of data.skills) {
+            request.push(from(resume.methods.setSkill(skill.class, skill.name).send({ from: this.providerSvc.defaultAccount })));
+        }
+        forkJoin(request).pipe(take(1)).subscribe(
+            res => {
+                this.transactionConfirmed();
+                this.profileForm.reset();
+                this.setFormDisabled(this.profileForm, false);
+            },
+            err => {
+                this.transactionError(err.message);
+                this.profileForm.reset();
+                this.setFormDisabled(this.profileForm, false);
+            }
+        );
     }
 
     public addSkillField(): void {
