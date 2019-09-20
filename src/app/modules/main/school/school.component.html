@@ -1,1 +1,27 @@
-<p>school works!</p>
+<div class="container my-3">
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+          <h1 class="display-4">教育單位專區</h1>
+          <p class="lead">提供教育單位新增學歷、修課證明以及證照的頁面</p>
+      </div>
+  </div>
+</div>
+<div class="container">
+  <ngb-tabset>
+      <ngb-tab title="新增學歷">
+          <ng-template ngbTabContent>
+              <app-school-education-add></app-school-education-add>
+          </ng-template>
+      </ngb-tab>
+      <ngb-tab title="新增修課證明">
+          <ng-template ngbTabContent>
+              <app-school-course-add></app-school-course-add>
+          </ng-template>
+      </ngb-tab>
+      <ngb-tab title="新增證照">
+          <ng-template ngbTabContent>
+              <app-school-license-add></app-school-license-add>
+          </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
