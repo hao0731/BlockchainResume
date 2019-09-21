@@ -1,1 +1,56 @@
-<p>school-license-add works!</p>
+<div class="my-3" *ngIf="!isConfirmed && !isError">
+    <form
+        [formGroup]="licenseForm"
+        (ngSubmit)="addLicense(licenseForm.value)"
+    >
+        <div class="form-group">
+            <label for="contract">履歷位址</label>
+            <input
+                type="text"
+                class="form-control"
+                id="contract"
+                placeholder="輸入履歷位址"
+                [formControlName]="'contract'"
+            >
+        </div>
+        <div class="form-group">
+            <label for="name">證照名稱</label>
+            <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="輸入證照名稱"
+                [formControlName]="'name'"
+            >
+        </div>
+        <div class="form-group">
+            <label for="content">課程內容</label>
+            <textarea
+                class="form-control"
+                id="content"
+                rows="5"
+                [formControlName]="'content'"
+            ></textarea>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary" [disabled]="licenseForm.invalid || isPending">新增</button>
+        </div>
+    </form>
+</div>
+<div class="my-3" *ngIf="isConfirmed">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>更新完成</strong>
+        <button type="button" class="close" (click)="resetConfirmState()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="my-3" *ngIf="isError">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>發生錯誤</strong> {{ errorMessage }}
+        <button type="button" class="close" (click)="resetErrorState()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
