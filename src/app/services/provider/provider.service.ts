@@ -87,4 +87,8 @@ export class ProviderService {
         return new this.web3.eth.Contract(ResumeContract.abi, address);
     }
 
+    public executeMethod(method: any): Observable<any> {
+        return from(method);
+    }
+
 }

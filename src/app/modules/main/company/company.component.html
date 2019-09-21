@@ -1,1 +1,22 @@
-<p>company works!</p>
+<div class="container my-3">
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+          <h1 class="display-4">企業單位專區</h1>
+          <p class="lead">提供企業單位編輯職位與工作期間</p>
+      </div>
+  </div>
+</div>
+<div class="container">
+  <ngb-tabset>
+      <ngb-tab title="設置職位">
+          <ng-template ngbTabContent>
+              <app-company-experience-add></app-company-experience-add>
+          </ng-template>
+      </ngb-tab>
+      <ngb-tab title="設置離職日">
+          <ng-template ngbTabContent>
+              <app-company-experience-end></app-company-experience-end>
+          </ng-template>
+      </ngb-tab>
+  </ngb-tabset>
+</div>

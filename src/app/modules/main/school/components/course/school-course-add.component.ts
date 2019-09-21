@@ -1,6 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ComponentBase } from 'src/app/base/component.base';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-school-course-add',
@@ -28,18 +29,23 @@ export class SchoolCourseAddComponent extends ComponentBase {
         this.isPending = true;
         this.setFormDisabled(this.courseForm);
         const resume = this.providerSvc.getResume(data.contract);
-        resume.methods.setCourse(data.name, data.content, data.comment, data.grade)
-        .send({ from: this.providerSvc.defaultAccount })
-        .on('receipt', receipt => {
-            this.transactionConfirmed();
-            this.courseForm.reset();
-            this.setFormDisabled(this.courseForm, false);
-        })
-        .on('error', err => {
-            this.transactionError();
-            this.courseForm.reset();
-            this.setFormDisabled(this.courseForm, false);
-        });
+        this.providerSvc.executeMethod(
+            resume.methods.setCourse(data.name, data.content, data.comment, data.grade)
+            .send({ from: this.providerSvc.defaultAccount })
+        ).pipe(
+            take(1)
+        ).subscribe(
+            receipt => {
+                this.transactionConfirmed();
+                this.courseForm.reset();
+                this.setFormDisabled(this.courseForm, false);
+            },
+            err => {
+                this.transactionError();
+                this.courseForm.reset();
+                this.setFormDisabled(this.courseForm, false);
+            }
+        );
     }
 
 }

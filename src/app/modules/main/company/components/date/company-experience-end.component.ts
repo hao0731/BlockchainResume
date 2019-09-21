@@ -4,42 +4,44 @@ import { take } from 'rxjs/operators';
 import { ComponentBase } from 'src/app/base/component.base';
 
 @Component({
-    selector: 'app-school-license-add',
-    templateUrl: './school-license-add.component.html',
-    styleUrls: ['./school-license-add.component.scss']
+  selector: 'app-company-experience-end',
+  templateUrl: './company-experience-end.component.html',
+  styleUrls: ['./company-experience-end.component.scss']
 })
-export class SchoolLicenseAddComponent extends ComponentBase {
-    public licenseForm: FormGroup;
+export class CompanyExperienceEndComponent extends ComponentBase {
+    public endDateForm: FormGroup;
 
     constructor(
         private injector: Injector,
         private formBuilder: FormBuilder
     ) {
         super(injector);
-        this.licenseForm = this.formBuilder.group({
+        this.endDateForm = this.formBuilder.group({
             contract: ['', [Validators.required, this.addressValidator]],
-            name: ['', [Validators.required]],
-            content: ['', [Validators.required]]
+            endDate: ['', [Validators.required]]
         });
     }
 
-    public addLicense(data: any): void {
+    public setEndDate(data: any): void {
+        data.endDate = new Date(data.endDate.year, data.endDate.month - 1, data.endDate.day).valueOf();
+        this.isPending = true;
+        this.setFormDisabled(this.endDateForm);
         const resume = this.providerSvc.getResume(data.contract);
         this.providerSvc.executeMethod(
-            resume.methods.setLicense(data.name, data.content)
+            resume.methods.setJobEndDate(data.endDate)
             .send({ from: this.providerSvc.defaultAccount })
         ).pipe(
             take(1)
         ).subscribe(
             receipt => {
                 this.transactionConfirmed();
-                this.licenseForm.reset();
-                this.setFormDisabled(this.licenseForm, false);
+                this.endDateForm.reset();
+                this.setFormDisabled(this.endDateForm, false);
             },
             err => {
                 this.transactionError();
-                this.licenseForm.reset();
-                this.setFormDisabled(this.licenseForm, false);
+                this.endDateForm.reset();
+                this.setFormDisabled(this.endDateForm, false);
             }
         );
     }

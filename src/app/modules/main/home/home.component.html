@@ -1,1 +1,25 @@
-<p>home works!</p>
+<div class="container my-3">
+    <form
+        [formGroup]="contractForm"
+        (ngSubmit)="getProfile(contractForm.value.contract)"
+    >
+        <div class="input-group mb-2 mr-sm-2">
+            <input type="text" class="form-control" placeholder="輸入履歷位址" [formControlName]="'contract'">
+            <button type="submit" class="btn btn-primary" [disabled]="contractForm.invalid">確認</button>
+        </div>
+    </form>
+    <div class="card" *ngIf="profile">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+</div>
