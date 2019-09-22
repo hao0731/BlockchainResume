@@ -79,7 +79,8 @@ export class ProviderService {
             mergeMap((instance: any) => {
                 resume.link('StrLib', instance.address);
                 return resume.new(info.name, info.address, info.age, info.gender, { from: this.defaultAccount });
-            })
+            }),
+            take(1)
         );
     }
 

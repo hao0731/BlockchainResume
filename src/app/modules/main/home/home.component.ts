@@ -1,7 +1,9 @@
 import { Component, Injector } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { switchMap, take } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 import { ComponentBase } from 'src/app/base/component.base';
-import { mergeMap } from 'rxjs/operators';
+import { ProfileModel } from 'src/app/types';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,9 @@ import { mergeMap } from 'rxjs/operators';
 })
 export class HomeComponent extends ComponentBase {
     public contractForm: FormGroup;
-    public profile: any = null;
+    public profile: ProfileModel = null;
+
+    public loaded = false;
 
     constructor(
         private injector: Injector,
@@ -24,7 +28,26 @@ export class HomeComponent extends ComponentBase {
 
     public getProfile(contract: string): void {
         const resume = this.providerSvc.getResume(contract);
-        this.providerSvc.executeMethod(resume.methods.profile().call());
+        const countReq = [];
+
+        this.loaded = false;
+        this.profile = new ProfileModel(resume);
+
+        countReq.push(this.providerSvc.executeMethod(resume.methods.getEducationCount().call()));
+        countReq.push(this.providerSvc.executeMethod(resume.methods.getExperienceCount().call()));
+        countReq.push(this.providerSvc.executeMethod(resume.methods.getSkillCount().call()));
+
+        forkJoin(countReq).pipe().subscribe(res => {
+            this.profile.setCounts(res);
+            this.profile.setEducations().pipe(
+                switchMap(() => this.profile.setExperiences()),
+                switchMap(() => this.profile.setSkills()),
+                take(1)
+            ).subscribe(() => {
+                this.loaded = true;
+                console.log(this.profile);
+            });
+        });
     }
 
 }

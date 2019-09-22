@@ -8,18 +8,48 @@
             <button type="submit" class="btn btn-primary" [disabled]="contractForm.invalid">確認</button>
         </div>
     </form>
-    <div class="card" *ngIf="profile">
+    <div class="card" *ngIf="loaded && profile">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
+            <h2 class="card-title">{{ profile.name }}</h2>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item"><b>性別：</b>{{ profile.gender }}</li>
+            <li class="list-group-item"><b>年齡：</b>{{ profile.age }}</li>
+            <li class="list-group-item"><b>聯絡：</b>{{ profile.contact }}</li>
+            <li class="list-group-item"><b>帳戶：</b>{{ profile.account }}</li>
         </ul>
         <div class="card-body">
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
+            <h3>自傳</h3>
+            <p>{{ profile.autobiography }}</p>
+            <hr>
+        </div>
+        <div class="card-body">
+            <h3>學歷</h3>
+            <div class="my-4" *ngFor="let edu of profile.educations.items">
+                <h4>{{ edu.schoolName }} <small class="text-muted">{{ edu.major }}</small></h4>
+                <p>學業狀態：{{ edu.status }}</p>
+                <h5>修習課程：</h5>
+                <div *ngFor="let course of edu.courses.items">
+                    <p><b>{{ course.courseName }}</b></p>
+                    <p>課程內容：{{ course.content }}</p>
+                    <p>學期總分：{{ course.grade }}</p>
+                    <p>教師評語：{{ course.comment }}</p>
+                </div>
+                <h5>證照：</h5>
+                <div *ngFor="let license of edu.licenses.items">
+                    <p><b>{{ license.licenseName }}</b></p>
+                    <p>證照內容：{{ license.content }}</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="card-body">
+            <h3>經歷</h3>
+            <div class="my-4" *ngFor="let job of profile.experiences.items">
+                <h4>{{ job.companyName }} <small class="text-muted">{{ job.position }}</small></h4>
+                <p>就職日：{{ job.startDate }}</p>
+                <p>離職日：{{ job.endDate }}</p>
+            </div>
         </div>
     </div>
 </div>
