@@ -24,6 +24,13 @@
             <hr>
         </div>
         <div class="card-body">
+            <h3>專業技能</h3>
+            <div class="my-4" *ngFor="let skill of skills">
+                <h4>{{ skill.class }}</h4>
+                <p *ngFor="let item of skill.items">{{ item }}</p>
+            </div>
+        </div>
+        <div class="card-body">
             <h3>學歷</h3>
             <div class="my-4" *ngFor="let edu of profile.educations.items">
                 <h4>{{ edu.schoolName }} <small class="text-muted">{{ edu.major }}</small></h4>

@@ -13,6 +13,7 @@ import { ProfileModel } from 'src/app/types';
 export class HomeComponent extends ComponentBase {
     public contractForm: FormGroup;
     public profile: ProfileModel = null;
+    public skills = null;
 
     public loaded = false;
 
@@ -44,10 +45,24 @@ export class HomeComponent extends ComponentBase {
                 switchMap(() => this.profile.setSkills()),
                 take(1)
             ).subscribe(() => {
+                this.dealSkills();
                 this.loaded = true;
-                console.log(this.profile);
             });
         });
+    }
+
+    private dealSkills(): void {
+        const skills = this.profile.skills.items;
+        const classBuffer = skills.map(x => x.class);
+        const noRepeatClass = classBuffer.filter((val, i, arr) => arr.indexOf(val) === i);
+        const sk = [];
+        noRepeatClass.forEach(key => {
+          sk.push({
+              class: key,
+              items: skills.filter(x => x.class === key).map(x => x.name)
+          });
+        });
+        this.skills = sk;
     }
 
 }
