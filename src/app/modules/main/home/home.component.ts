@@ -6,9 +6,9 @@ import { ComponentBase } from 'src/app/base/component.base';
 import { ProfileModel } from 'src/app/types';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent extends ComponentBase {
     public contractForm: FormGroup;
@@ -38,16 +38,17 @@ export class HomeComponent extends ComponentBase {
         countReq.push(this.providerSvc.executeMethod(resume.methods.getExperienceCount().call()));
         countReq.push(this.providerSvc.executeMethod(resume.methods.getSkillCount().call()));
 
-        forkJoin(countReq).pipe().subscribe(res => {
-            this.profile.setCounts(res);
-            this.profile.setEducations().pipe(
-                switchMap(() => this.profile.setExperiences()),
-                switchMap(() => this.profile.setSkills()),
-                take(1)
-            ).subscribe(() => {
-                this.dealSkills();
-                this.loaded = true;
-            });
+        forkJoin(countReq).pipe(
+            switchMap(res => {
+                this.profile.setCounts(res);
+                return this.profile.setEducations();
+            }),
+            switchMap(() => this.profile.setExperiences()),
+            switchMap(() => this.profile.setSkills()),
+            take(1)
+        ).subscribe(() => {
+            this.dealSkills();
+            this.loaded = true;
         });
     }
 

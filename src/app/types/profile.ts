@@ -188,12 +188,12 @@ export class ProfileModel {
             forkJoin(forkAry).pipe(take(1)).subscribe(res => {
                 for (let i = 0; i < educationCount; i++) {
                     const courseCount = this.educations.items[i].courses.count;
-                    for (let j = 1; j <= courseCount; j++) {
+                    for (let j = 0; j < courseCount; j++) {
                         this.educations.items[i].courses.items.push({
-                            courseName: res[i][j - 1]['0'],
-                            content: res[i][j - 1]['1'],
-                            comment: res[i][j - 1]['2'],
-                            grade: res[i][j - 1]['3']
+                            courseName: res[i][j]['0'],
+                            content: res[i][j]['1'],
+                            comment: res[i][j]['2'],
+                            grade: res[i][j]['3']
                         } as Course);
                     }
                 }
@@ -222,10 +222,10 @@ export class ProfileModel {
             forkJoin(forkAry).pipe(take(1)).subscribe(res => {
                 for (let i = 0; i < educationCount; i++) {
                     const licenseCount = this.educations.items[i].licenses.count;
-                    for (let j = 1; j <= licenseCount; j++) {
+                    for (let j = 0; j < licenseCount; j++) {
                         this.educations.items[i].licenses.items.push({
-                            licenseName: res[i][j - 1]['0'],
-                            content: res[i][j - 1]['1']
+                            licenseName: res[i][j]['0'],
+                            content: res[i][j]['1']
                         } as License);
                     }
                 }
@@ -271,9 +271,10 @@ export class ProfileModel {
         let result = '';
         if (!value) {
             result = '尚未設置';
+        } else {
+            const date = new Date(value);
+            result = `${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`;
         }
-        const date = new Date(value);
-        result = `${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`;
         return result;
     }
 }

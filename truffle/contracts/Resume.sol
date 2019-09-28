@@ -88,7 +88,6 @@ contract Resume is ResumeBase {
         edu.major = major;
         edu.courses.push(course);
         edu.licenses.push(license);
-        educations.push(edu);
         emit done(DoneCode.setEducation, "Set Education");
     }
 
