@@ -1,27 +1,23 @@
 # BlockchainResume
+為第11屆iT邦幫忙鐵人賽區塊鏈組之[區塊練起來-智能合約與DApp開發系列文](https://ithelp.ithome.com.tw/users/20119338/ironman/2150)的小專題。
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
+## 小專題目標
+我們將使用智能合約的方式來提供高可信度的個人履歷表，讓履歷的真實性更高！
+### 情境
+* 假設每個公民都有一份屬於自己的智能合約，這份智能合約就是你個人的履歷表
+* 該智能合約是由政府單位部署
+* 一般公民只有基本的編輯權限，如：個人資料、專業技術、自傳等
+* 而企業單位在雇用員工時，應在該員工的智能合約中添加經歷等資訊
+* 教育單位應在該公民的智能合約中添加學歷、修課證明等
 
-## Development server
+### 參與者
+* **政府單位** ：合約發起者，為owner，可以設定：企業與教育單位編輯合約的權限、建立公民的基本資料
+* **企業單位** ：透過政府單位給予編輯權限來設定：員工於該公司的職稱、工作期間
+* **教育單位** ：透過政府單位給予編輯權限來設定：學生的學歷、修課證明、專業證照
+* **一般公民** ：可以填寫：自傳、專業技術、基本聯絡方式
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## 前置作業
+1. 使用`npm install`將套件裝好
+2. 移至**truffle**資料夾執行`truffle compile`
+3. 移出**truffle**資料夾並執行`npm run patch-webpack`來修改webpack設定
+4. 使用`ng serve`啟動
