@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { take, mergeMap } from 'rxjs/operators';
 
-import * as Web3 from 'web3';
+import Web3 from 'web3';
 
 import { TransactionParameter, ResumeContract, StrLibContract, ResumeInitialOptions } from './../../types';
 
